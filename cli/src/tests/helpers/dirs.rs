@@ -4,7 +4,14 @@ lazy_static! {
     pub static ref HEADER_DIR: PathBuf = ROOT_DIR.join("lib").join("include");
     pub static ref GRAMMARS_DIR: PathBuf = ROOT_DIR.join("test").join("fixtures").join("grammars");
     pub static ref SCRATCH_BASE_DIR: PathBuf = {
-        let result = ROOT_DIR.join("target").join("scratch");
+        let base = if let Some(tmpdir) = option_env!("CARGO_TARGET_TMPDIR") {
+            Pathbuf::from(tmpdir)
+        } else if let Some(targetdir) = option_env!("CARGO_TARGET_DIR") {
+            Pathbuf::from(targetdir)
+        } else {
+            ROOT_DIR.join("target")
+        };
+        let result = base.join("scratch");
         fs::create_dir_all(&result).unwrap();
         result
     };
