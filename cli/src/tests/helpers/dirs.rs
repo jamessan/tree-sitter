@@ -5,9 +5,9 @@ lazy_static! {
     pub static ref GRAMMARS_DIR: PathBuf = ROOT_DIR.join("test").join("fixtures").join("grammars");
     pub static ref SCRATCH_BASE_DIR: PathBuf = {
         let base = if let Some(tmpdir) = option_env!("CARGO_TARGET_TMPDIR") {
-            Pathbuf::from(tmpdir)
+            PathBuf::from(tmpdir)
         } else if let Some(targetdir) = option_env!("CARGO_TARGET_DIR") {
-            Pathbuf::from(targetdir)
+            PathBuf::from(targetdir)
         } else {
             ROOT_DIR.join("target")
         };
